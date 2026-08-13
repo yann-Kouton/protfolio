@@ -14,6 +14,7 @@ export const nav = [
   { label: "Compétences", href: "#competences" },
   { label: "Parcours", href: "#parcours" },
   { label: "Projets", href: "#projets" },
+  { label: "Blog", href: "/blog", isRoute: true },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -129,7 +130,7 @@ export const timeline = {
 
 export const projects = {
   eyebrow: "RÉALISATIONS",
-  title: "Six problèmes concrets, résolus jusqu'au bout.",
+  title: "Sept problèmes concrets, résolus jusqu'au bout.",
   items: [
     {
       name: "SainteMM",

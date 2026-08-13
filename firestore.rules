@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /posts/{postId} {
+      // Tout le monde peut lire les articles publiés
+      allow read: if resource.data.published == true;
+      // Un utilisateur connecté (toi, l'admin) peut tout lire, y compris les brouillons,
+      // et peut créer / modifier / supprimer
+      allow read, write: if request.auth != null;
+    }
+  }
+}

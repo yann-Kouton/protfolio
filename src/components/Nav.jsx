@@ -1,11 +1,35 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { nav, profile } from "../data/content.js";
+
+function NavLink({ item, isHome, className, onClick }) {
+  if (item.isRoute) {
+    return (
+      <Link to={item.href} className={className} onClick={onClick}>
+        {item.label}
+      </Link>
+    );
+  }
+  // Anchor link: normal <a> on the home page (native scroll),
+  // or a Link back to "/" + hash from any other page.
+  return isHome ? (
+    <a href={item.href} className={className} onClick={onClick}>
+      {item.label}
+    </a>
+  ) : (
+    <Link to={`/${item.href}`} className={className} onClick={onClick}>
+      {item.label}
+    </Link>
+  );
+}
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -36,13 +60,12 @@ export default function Nav() {
 
         <nav className="hidden md:flex items-center gap-8">
           {nav.map((item) => (
-            <a
+            <NavLink
               key={item.href}
-              href={item.href}
+              item={item}
+              isHome={isHome}
               className="text-sm text-muted hover:text-cream transition-colors"
-            >
-              {item.label}
-            </a>
+            />
           ))}
           <a
             href={`mailto:${profile.email}`}
@@ -72,14 +95,13 @@ export default function Nav() {
           >
             <div className="flex flex-col px-6 py-4 gap-1">
               {nav.map((item) => (
-                <a
+                <NavLink
                   key={item.href}
-                  href={item.href}
+                  item={item}
+                  isHome={isHome}
                   onClick={() => setOpen(false)}
                   className="py-3 text-base text-cream/90 border-b border-ink-500/40 last:border-none"
-                >
-                  {item.label}
-                </a>
+                />
               ))}
             </div>
           </motion.div>

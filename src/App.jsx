@@ -1,25 +1,26 @@
-import Nav from "./components/Nav.jsx";
-import Hero from "./components/Hero.jsx";
-import About from "./components/About.jsx";
-import Skills from "./components/Skills.jsx";
-import Timeline from "./components/Timeline.jsx";
-import Projects from "./components/Projects.jsx";
-import Contact from "./components/Contact.jsx";
-import Footer from "./components/Footer.jsx";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home.jsx";
+import BlogList from "./pages/BlogList.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
+import AdminLogin from "./pages/AdminLogin.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 export default function App() {
   return (
-    <div className="bg-ink-900 min-h-screen text-cream font-body overflow-x-hidden">
-      <Nav />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Timeline />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/blog" element={<BlogList />} />
+      <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
