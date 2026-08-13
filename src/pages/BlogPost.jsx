@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { ArrowLeft } from "lucide-react";
 import { db } from "../lib/firebase.js";
+import { linkify } from "../lib/linkify.jsx";
 import Nav from "../components/Nav.jsx";
 import Footer from "../components/Footer.jsx";
 import NotebookViewer from "../components/NotebookViewer.jsx";
@@ -56,7 +57,7 @@ export default function BlogPost() {
         {post && (
           <>
             <h1 className="font-display font-bold text-3xl md:text-4xl text-cream">{post.title}</h1>
-            {post.description && <p className="text-muted mt-3">{post.description}</p>}
+            {post.description && <p className="text-muted mt-3">{linkify(post.description)}</p>}
             {post.coverImageUrl && (
               <img
                 src={post.coverImageUrl}
